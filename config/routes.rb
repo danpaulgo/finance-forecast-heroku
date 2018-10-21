@@ -26,17 +26,17 @@ Rails.application.routes.draw do
   # RESOURCE RESOURCES
 
   # FINANCE_RESOURCES = ResourceName.all.map{|r| r.table_name.to_sym}
-
-  # ResourceName.all.map{|r| r.table_name.to_sym}.each do |r|
-  #   resources r, only: [:index, :create, :edit, :update, :destroy]
-  #   get "#{r}/options", to: "#{r}#options"
-  #   post "#{r}/options", to: "#{r}#process_option"
-  #   get "#{r}/new", to: "#{r}#new_redirect"
-  #   get "#{r}/new/:type_id", to: "#{r}#new"
-  #   get "#{r}/index", to: "#{r}#sort_index"
-  #   get "#{r}/:id", to: "#{r}#show"
-  #   get "#{r}/:id/edit", to: "#{r}#edit"
-  # end
+  resource_table_names = [:assets, :debts, :expenses, :incomes, :tansfers]
+  resource_table_names.each do |r|
+    resources r, only: [:index, :create, :edit, :update, :destroy]
+    get "#{r}/options", to: "#{r}#options"
+    post "#{r}/options", to: "#{r}#process_option"
+    get "#{r}/new", to: "#{r}#new_redirect"
+    get "#{r}/new/:type_id", to: "#{r}#new"
+    get "#{r}/index", to: "#{r}#sort_index"
+    get "#{r}/:id", to: "#{r}#show"
+    get "#{r}/:id/edit", to: "#{r}#edit"
+  end
 
   # SPECIAL ASSET FORM
 
