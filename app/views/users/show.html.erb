@@ -1,0 +1,43 @@
+<div class="show-wrapper">
+  <div class="col-sm-12">
+    <div class="user-show-header">
+      <h2 class="user-show-title"><%= "Welcome back, #{@user.first_name}!" %></h2>
+      <div class="user-info">
+        <p class="full-name"><%= @user.full_name %></p>|<p class="email"> <%= @user.email %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 <%= 'hide' if @user.intro_quiz_complete %>">
+    <div class="intro-quiz-notice" >
+      <p class="notice-bold">Notice:</p> Don't forget to complete our <%= link_to "Intro Quiz", iq_step_one_path %> to get a jump start on managing your finances!
+    </div>
+  </div>
+  <div class="col-sm-6" id="homepage-left">
+    <div class="resource-links">
+      <% ResourceName.all.each_with_index do |r, i| %>
+        <div class="homepage-resource">
+          <a href='<%= "/#{r.table_name}" %>'><p class="homepage-resource-link" id='<%= "last" if i == 4 %>'><%= r.name.pluralize %></p></a>
+        </div>
+      <% end %>
+    </div>
+    
+  </div>
+  <div class="col-sm-6" id="homepage-right">
+    <div class="net-worth">
+      <div class="liquid clearfix">
+        <p class="title">Liquid Net Worth:</p>
+        <p class="value"><%= @user.liquid_net_worth %></p>
+      </div>
+      <div class="total clearfix">
+        <p class="title">Total Net Worth:</p>
+        <p class="value"><%= @user.total_net_worth %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div class="finance-graph">
+      <%= image_tag("js_linegraph.png") %>
+    </div>
+    <div class="graph-selector"><p class="forecast-text">See your financial forecast for the next &nbsp;</p><%= select_tag 'user_id', options_for_select([["1 year", 1],["5 years",5],["10 years", 10],["20 years", 20],["50 years", 50]], 10) %></div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<%= render partial: 'forms/form_header', locals: {form_title: "New Asset"} %>
+<p class="form-category"><%= @type_category %></p>
+<%= form_for @page_resource, url: process_special_asset_step_1_path do |f| %>
+
+  <%= render partial: "forms/form_section", locals: {form_object: f, label_for: :name, label_name: "Name", form_method: form_name(f, @type_category, @page_resource.name)} %>
+  
+  <%= render partial: "forms/form_section", locals: {form_object: f, label_for: :amount, label_name: "Amount", form_method: form_amount(f)} %>
+
+  <div class="form-group">
+    <% if @type.name == "Vehicle" %>
+      <label class="col-md-3 control-label">Is this vehicle financed?</label>
+    <% elsif  @type.name == "Property" %>
+      <label class="col-md-3 control-label">Are you currently paying a mortgage on this property?</label>
+    <% end %>
+    <div class="col-md-9">
+      <label value="true" for="financed_true">Yes</label>
+      <input type="radio" name="special_asset_steps_step1_<%= @type_category.downcase %>[financed]" id="financed_true" value="true" <%= "checked" if @owed %> />
+      <label value="false" for="financed_false" class="right-radio">No</label>
+      <input type="radio" name="special_asset_steps_step1_<%= @type_category.downcase %>[financed]" id="financed_false" value="false" <%= "checked" if @paid %> />
+    </div>
+  </div>
+
+  <% if @type.name == "Property" %>
+    <%= render partial: "resources/assets/special_assets/step_1_property_ext" %>
+  <% end %>
+
+  <%= render partial: "forms/form_submit", locals: {button_text: "Next"} %>
+
+<% end %>
+
+<%= render 'forms/form_footer' %>

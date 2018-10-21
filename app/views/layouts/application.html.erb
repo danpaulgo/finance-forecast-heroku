@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FinanceForecast2</title>
+    <title>Finance Forecast</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,6 +9,71 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <a title="Home" href="/"><div class="logo"></div></a>
+      <nav>
+        <%= link_to image_tag("new-user-icon.png", class: "user-icon"), account_path, title: "Account" %>
+        <%= link_to image_tag("about-icon.png", class: "about-icon"), about_path, title: "About" %>
+        <%= link_to image_tag("contact-icon.png", class: "contact-icon"), contact_path, title: "Contact" %>
+        <% if current_user.nil? %>
+          <%= render partial: "shared/logged_out_menu" %>
+        <% else %>
+          <%= render partial: "shared/logged_in_menu" %>
+        <% end %>
+      </nav>
+    </header>
+
+    <% flash.each do |message_type, message_array| %>
+      <!-- <div class="alert alert-<%= message_type %>">
+        <%# message %> 
+      </div> -->
+      <p><%= message_type.capitalize %>: </p>
+      <ul>
+        <% message_array.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% flash.clear %>
+    <div class="application-wrapper">
+      <%= yield %>
+    </div>
+    <footer class="col-sm-12">
+
+      <div class="footer-top col-sm-12"></div>
+
+      <div class="footer-left col-sm-4"> 
+        <h4><b>Navigation</b></h4>
+        <ul class="footer-links">
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li><%= link_to "Contact", contact_path %></li>
+          <li><%= link_to "Account", account_path %></li>
+        </ul>
+        
+      </div>
+
+      <div class="footer-mid col-sm-4"> 
+        <div class="footer-logo">
+          <%= image_tag("logo-white.png") %>
+        </div>
+        <div class="footer-icons">
+          <a href="https://www.linkedin.com/in/daniel-goldberg-9855b18a/" target="_blank" title="Linkedin"><%= image_tag("linkedin-icon.png", class: "linkedin-icon") %></a>
+          <a href="https://github.com/danpaulgo/personal_finance_app" target="_blank" title="Github"><%= image_tag("github-icon.png", class: "github-icon") %></a>
+        </div>
+        <!-- <div class="footer-left-barrier"></div> -->
+      </div>
+
+      <div class="footer-right col-sm-4">
+        <h4><b>Mission Statement</b></h4>
+        <p class="footer-mission-statement">
+          Finance Forecast aims to provide an easy to use platform that helps others to assess their current financial position and get on track to a successful financial future
+        </p>
+        <!-- <div class="footer-left-barrier"></div> -->
+      </div>
+      <div class="footer-bottom col-sm-12">
+        <p class="footer-company-name">Finance Forecast &copy; 2017</p>
+      </div>
+    </footer>
   </body>
 </html>

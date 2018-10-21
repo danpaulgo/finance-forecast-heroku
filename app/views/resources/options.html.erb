@@ -1,0 +1,10 @@
+<%= render partial: 'forms/form_header', locals: {form_title: @title} %>
+<p class="form-category"><%= "Select #{$resource} Type" %></p>
+  <%= form_for @page_resource, url: "/#{$resource_plural}/options" do |f| %>
+    <div class="form-group form-input col-md-9">
+      <%= form_select_type(f, $resource) %>
+    </div>
+    <%= render partial: "forms/form_submit", locals: {button_text: "Next"} %>
+  <% end %>
+<%= render 'forms/form_footer' %>
+

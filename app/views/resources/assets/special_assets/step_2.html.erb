@@ -1,0 +1,20 @@
+<%# render 'resources/forms/form_header' %>
+<%= render partial: 'forms/form_header', locals: {form_title: "New Asset"} %>
+<%= form_for @page_resource, url: process_special_asset_step_2_path do |f| %>
+
+  <p class="form-category"><%= @loan_name.to_title %> Details</p>
+  
+  <%= render partial: "forms/form_section", locals: {form_object: f, label_for: :amount, label_name: "Amount", form_method: form_amount(f)} %>
+
+  <%= render partial: "forms/form_section", locals: {form_object: f, label_for: :interest, label_name: "Interest", form_method: form_interest(f)} %>
+
+  <%= render partial: "forms/form_section", locals: {form_object: f, label_for: :compound_frequency, label_name: "Compound Frequency", form_method: form_compound_frequency(f)} %>
+
+  <%= render partial: "forms/form_submit", locals: {button_text: "Next"} %>
+  
+<% end %>
+
+<p class="loan-footnote">* If you do not have all necessary information, you may <%= link_to "enter your #{@loan_name} payments as an expense", special_asset_step_3_path %> instead or <%= link_to "skip", special_asset_step_4_path %> this step altogether</p>
+
+<%= render 'forms/form_footer' %>
+<!-- This will link to the other page which will have a link that reads "Enter vehicle loan as a debt". vehicle_step_three_path must be replaced  -->
