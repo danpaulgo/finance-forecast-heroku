@@ -1,4 +1,4 @@
-class SpecialAssetFormController < AssetsController
+class SpecialAssetFormController < UserResourcesController
 
   before_action :set_type
 
