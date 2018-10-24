@@ -1,6 +1,6 @@
 <h2 class="index-title"><%= $resource.pluralize %></h1>
 <div class="sort-select" >
-  <%= form_tag "/#{$resource_plural}/index", method: :get do %>
+  <%= form_tag "/#{$resource_plural}/sort", method: :get do %>
     <%= select_tag :attribute, options_for_select(@sort_options, @option_value) %>
     <%= select_tag :direction, options_for_select(@sort_direction, @direction_value) %>
     <%= submit_tag "Go" %>
@@ -26,7 +26,7 @@
           
           <div class="resource-box-right">
             <%= link_to "edit", "/#{$resource_plural}/#{r.id}/edit", class: "edit-button" %>
-            <%= link_to 'delete',  "/#{$resource_plural}/#{r.id}",  method: :delete, data: { confirm: "Are you sure you would like to delete this #{$resource.downcase}?" } %>
+            <%= link_to 'delete',  "/delete/#{$resource_plural}/#{r.id}",  method: :delete, data: { confirm: "Are you sure you would like to delete this #{$resource.downcase}?" } %>
           </div>
 
         </div>

@@ -16,7 +16,7 @@
     <div class="resource-links">
       <% ResourceName.all.each_with_index do |r, i| %>
         <div class="homepage-resource">
-          <a href='<%= "/#{r.table_name}" %>'><p class="homepage-resource-link" id='<%= "last" if i == 4 %>'><%= r.name.pluralize %></p></a>
+          <a href='<%= "#{r.table_name}" %>'><p class="homepage-resource-link" id='<%= "last" if i == 4 %>'><%= r.name.pluralize %></p></a>
         </div>
       <% end %>
     </div>

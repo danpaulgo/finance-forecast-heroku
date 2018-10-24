@@ -2,7 +2,7 @@
 
 <p class="form-category"><%= @type_category %></p>
 
-<%= form_for(@page_resource) do |f| %>
+<%= form_for(@page_resource, url: @submit_path) do |f| %>
 
 <% if @form_type == "edit" && $resource != "Transfer" %>
   <%= render partial: "forms/form_section", locals: {form_object: f, label_for: :type, label_name: "Select #{$resource} Type", form_method: form_select_type(f, $resource)} %>

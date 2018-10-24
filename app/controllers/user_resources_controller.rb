@@ -3,32 +3,37 @@ class UserResourcesController < ApplicationController
   include SessionsHelper
   include UserResourcesHelper
 
-  before_action :access_granted
+  before_action :access_granted, :set_resource
   before_action :correct_user, only: [:edit, :update, :destroy]
 
-  def self.set_resource(resource)
-    $resource = resource
-    $resource_plural = $resource.downcase.pluralize
+  # def initialize
+  #   binding.pry
+  #   $resource_plural = params[:resource_table]
+  #   $resource = $resource_plural[0..-2].capitalize
+  #   # $resource_plural = $resource.downcase.pluralize
+  #   $new_resource = $resource.downcase.camelize.constantize.new
+  # end
+
+  def set_resource
+    $resource_plural = params[:resource_table]
+    $resource = $resource_plural[0..-2].capitalize
     $new_resource = $resource.downcase.camelize.constantize.new
   end
 
   def index
     @user = current_user
-    @all = @user.send($resource_plural).paginate(page: params[:page], per_page: 10)
     @sort_options = [["Name", "name"], ["Amount", "amount"], ["Date Added", "created_at"], ["Last Updated", "updated_at"]]
     @sort_direction = [["ASC", "asc"], ["DESC", "desc"]]
-    @option_value = "created_at"
-    @direction_value = "asc"
-    render 'resources/index'
-  end
-
-  def sort_index
-    @user = current_user
-    @sort_options = [["Name", "name"], ["Amount", "amount"], ["Date Added", "created_at"], ["Last Updated", "updated_at"]]
-    @sort_direction = [["ASC", "asc"], ["DESC", "desc"]]
-    @option_value = sort_params[:attribute]
-    @direction_value = sort_params[:direction]
-    @all = @user.send($resource_plural).order(@option_value.to_sym => @direction_value.to_sym, name: @direction_value.to_sym).paginate(page: params[:page], per_page: 10)
+    if sort_params.blank?
+      @option_value = "created_at"
+      @direction_value = "asc"
+    else
+      @option_value = sort_params[:attribute]
+      @direction_value = sort_params[:direction]
+    end
+    @all = @user.send($resource_plural)
+    .order("#{'lower' if @option_value == 'name'}(#{@option_value}) #{@direction_value}", name: @direction_value.to_sym)
+    .paginate(page: params[:page], per_page: 10)
     render 'resources/index'
   end
 
@@ -94,6 +99,7 @@ class UserResourcesController < ApplicationController
       $resource == "Transfer" ? @form_type = "" : @form_type = "new_"
       @title_text = "New"
       set_button_text(@title_text)
+      @submit_path = "/new/#{$resource_plural}"
       render "resources/form_page"
     else
       flash[:error] = ["Invalid #{@page_resource.class.name.downcase} type"]
@@ -131,6 +137,7 @@ class UserResourcesController < ApplicationController
     $resource == "Transfer" ? @form_type = "" : @form_type = "edit_"
     @title_text = "Edit"
     set_button_text(@title_text)
+    @submit_path = "/edit/#{$resource_plural}/#{@page_resource.id}"
     render "resources/form_page" 
   end
 

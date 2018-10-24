@@ -23,20 +23,19 @@ Rails.application.routes.draw do
   get 'static_pages/about', as: "about"
   get 'static_pages/contact', as: "contact"
 
-  # RESOURCE RESOURCES
+  # USER RESOURCE PAGES
 
-  # FINANCE_RESOURCES = ResourceName.all.map{|r| r.table_name.to_sym}
-  resource_table_names = [:assets, :debts, :expenses, :incomes, :tansfers]
-  resource_table_names.each do |r|
-    resources r, only: [:index, :create, :edit, :update, :destroy]
-    get "#{r}/options", to: "#{r}#options"
-    post "#{r}/options", to: "#{r}#process_option"
-    get "#{r}/new", to: "#{r}#new_redirect"
-    get "#{r}/new/:type_id", to: "#{r}#new"
-    get "#{r}/index", to: "#{r}#sort_index"
-    get "#{r}/:id", to: "#{r}#show"
-    get "#{r}/:id/edit", to: "#{r}#edit"
-  end
+  get ":resource_table", to: "user_resources#index"
+  get ":resource_table/sort", to: "user_resources#index"
+  get ":resource_table/options", to: "user_resources#options"
+  get ":resource_table/new", to: "user_resources#new_redirect"
+  post "options/:resource_table", to: "user_resources#process_option"
+  get ":resource_table/new/:type_id", to: "user_resources#new"
+  post "new/:resource_table", to: "user_resources#create"
+  get ":resource_table/:id", to: "user_resources#show"
+  get ":resource_table/:id/edit", to: "user_resources#edit"
+  patch "edit/:resource_table/:id", to: "user_resources#update"
+  delete "delete/:resource_table/:id", to: "user_resources#destroy"
 
   # SPECIAL ASSET FORM
 
