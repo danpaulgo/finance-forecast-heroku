@@ -6,20 +6,6 @@ class UserResourcesController < ApplicationController
   before_action :access_granted, :set_resource
   before_action :correct_user, only: [:edit, :update, :destroy]
 
-  # def initialize
-  #   binding.pry
-  #   $resource_plural = params[:resource_table]
-  #   $resource = $resource_plural[0..-2].capitalize
-  #   # $resource_plural = $resource.downcase.pluralize
-  #   $new_resource = $resource.downcase.camelize.constantize.new
-  # end
-
-  def set_resource
-    $resource_plural = params[:resource_table]
-    $resource = $resource_plural[0..-2].capitalize
-    $new_resource = $resource.downcase.camelize.constantize.new
-  end
-
   def index
     @user = current_user
     @sort_options = [["Name", "name"], ["Amount", "amount"], ["Date Added", "created_at"], ["Last Updated", "updated_at"]]
@@ -174,6 +160,12 @@ class UserResourcesController < ApplicationController
     def resource_params
       params.require($resource.downcase.to_sym).permit(input_fields($new_resource).map{|pi| pi.to_sym})
       # MAY WORK WITHOUT ".to_sym" METHOD
+    end
+
+    def set_resource
+      $resource_plural = params[:resource_table]
+      $resource = $resource_plural[0..-2].capitalize
+      $new_resource = $resource.downcase.camelize.constantize.new
     end
 
     def sort_params

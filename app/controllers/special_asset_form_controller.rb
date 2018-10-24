@@ -230,7 +230,6 @@ class SpecialAssetFormController < UserResourcesController
     end
 
     def present_expenses
-      # @step_5 = session[:special_asset_step_5]
       expenses = []
       @step_5.all_attributes.each do |attribute|
         expenses.push attribute if !@step_5.send(attribute).values.all?{|v| v.blank?}
@@ -245,12 +244,6 @@ class SpecialAssetFormController < UserResourcesController
       else
         permitted_array = "SpecialAssetSteps::Step#{step_number.to_s.camelize}".constantize.new.all_attributes
         params.require(:"special_asset_steps_step#{step_number}").permit(permitted_array)
-      #   initial = permitted_array
-      #   permitted_array = []
-      #   initial.each do |attr|
-      #     permitted_array.push eval "{#{attr}: [:amount, :paid_using]}"
-      #   end
-      # end
       end
       
     end

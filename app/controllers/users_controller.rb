@@ -23,9 +23,6 @@ class UsersController < ApplicationController
       flash[:success] = ["Please check your e-mail for a link to activate your account"]
       redirect_to root_url
     else
-      # @user.errors.full_messages.each do |message|
-      #   flash[:error] += message 
-      # end
       render 'new'
     end
   end
