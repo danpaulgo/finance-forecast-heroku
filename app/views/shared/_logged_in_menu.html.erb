@@ -4,7 +4,7 @@
 </a>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
     <% ResourceName.all.each do |r| %>
-      <%= link_to r.name.pluralize, "#{r.table_name}", class: "dropdown-item" %>
+      <%= link_to r.name.pluralize, "/#{r.table_name}", class: "dropdown-item" %>
     <% end %>
     <div class="dropdown-divider"></div>
     <%= link_to 'Account', account_path %>
