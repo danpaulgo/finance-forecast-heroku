@@ -2,7 +2,7 @@
 
   <%= render 'resources/errors', object: @user %>
 
-  <p class="form-category">Create New Account</p>
+  <p class="form-category"><%= form_heading %></p>
 
   <%= render partial: "forms/form_section", locals: {col: true, form_object: f, label_for: :first_name, label_name: "First Name", form_method: form_user_name(f, :first)} %>
 
