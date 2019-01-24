@@ -11,7 +11,7 @@ class PasswordResetsController < ApplicationController
       flash[:success] = ["Email sent with password reset instructions"]
       redirect_to root_url
     else
-      flash[:error] = ["There is no associated with that e-mail address"]
+      flash[:error] = ["There is no account associated with that e-mail address"]
       render 'new'
     end
   end
