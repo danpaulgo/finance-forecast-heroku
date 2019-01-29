@@ -1,5 +1,5 @@
 <%= render partial: 'forms/form_header', locals: {form_title: "Login", corner_link_path: "/users/new", corner_link_text: "Sign Up"} %>
-  <%= form_for(:session, url: login_path, html: {class: "form-horizontal", role: "form", id: "loginform"}) do |f|%>
+  <%= form_for(@session, url: login_path, html: {class: "form-horizontal", role: "form", id: "loginform"}) do |f|%>
 
     <p class="form-category">Sign In</p>
 
