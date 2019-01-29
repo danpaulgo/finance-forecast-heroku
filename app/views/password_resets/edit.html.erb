@@ -1,0 +1,19 @@
+<%= render partial: 'forms/form_header', locals: {form_title: "Reset Password", corner_link_path: "/users/new", corner_link_text: "Sign Up"} %>
+  <%= form_for(@user, url: password_reset_path(@reset_token), html: {class: "form-horizontal", role: "form", id: "loginform"}) do |f|%>
+
+    <p class="form-category">Reset Password</p>
+
+    <%= hidden_field_tag :email, @user.email %>
+
+    <%= render partial: "forms/form_section", locals: {col: true, form_object: f, label_for: :password, label_name: "Password", form_method: form_password(f)} %>
+
+    <%= render partial: "forms/form_section", locals: {col: true, form_object: f, label_for: :password_confirmation, label_name: "Confirm Password", form_method: form_password_confirmation(f)} %>
+
+    <div class="form-group">
+      
+    </div>
+
+    <%= render partial: "forms/form_submit", locals: {button_text: "Submit"}  %>
+
+  <% end %>
+<%= render partial: 'forms/form_footer', locals: {remove_bottom_link: true} %>
